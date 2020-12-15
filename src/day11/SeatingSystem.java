@@ -58,50 +58,7 @@ public class SeatingSystem extends AoC {
 		return occupiedCount;
 	}
 	
-	public static int solveTest() throws IOException{
-		seats = Files.lines(Path.of("src/input_files/test.txt")).map(String::toCharArray).toArray(char[][]::new);
-		char[][] copy;
-			
-		int counter=0;
-		while (true){			
-			copy=copyOf(seats);		
-			for (int row = 0; row < copy.length; row++) {
-				for (int column = 0; column < copy[0].length; column++) {
-					char currentState=copy[row][column];
-					int adjacentOccupied = countAdjacentOccupied(row, column);
-					copy[row][column] = determineSeatState(adjacentOccupied,currentState);
-				}
-			}
-			if(Arrays.deepEquals(copy, seats)) {
-				break;
-			}
-			seats=copyOf(copy);
-			if(counter<5) {
-				printSeats(seats);
-			}
-			counter++;
-		}		
-
-		int occupiedCount=0;
-		for(char[]charArray:seats) {
-			for(char c:charArray) {
-				if(c=='#')occupiedCount++;
-			}
-		}
-		
-		return occupiedCount;
-	}
 	
-	private static void printSeats(char[][]seats) {
-		for(char[]charArray:seats) {
-			for(char c:charArray) {
-				System.out.print(c);
-			}
-			System.out.println();
-		}
-		System.out.println("***************************************");
-	}
-
 	private static int countAdjacentOccupied(int row, int column) {
 		int lastColumn = seats[0].length - 1;
 		int lastRow = seats.length - 1;
